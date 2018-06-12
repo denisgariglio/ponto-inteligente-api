@@ -88,7 +88,7 @@ public class FuncionarioRepositoryTest {
 
 		funcionario.setNome("Funcionario Teste");
 		funcionario.setPerfil(PerfilEnum.ROLE_USUARIO);
-		funcionario.setSenha(PasswordUtils.geraBCrypt("123456"));
+		funcionario.setSenha(PasswordUtils.gerarBCrypt("123456"));
 		funcionario.setCpf(CPF);
 		funcionario.setEmail(EMAIL);
 		funcionario.setEmpresa(empresa);

@@ -99,7 +99,7 @@ public class LancamentoRepositoryTest {
 
 		funcionario.setNome("Funcionario Teste");
 		funcionario.setPerfil(PerfilEnum.ROLE_USUARIO);
-		funcionario.setSenha(PasswordUtils.geraBCrypt("123456"));
+		funcionario.setSenha(PasswordUtils.gerarBCrypt("123456"));
 		funcionario.setCpf("55974952081");
 		funcionario.setEmail("email@teste.com");
 		funcionario.setEmpresa(empresa);

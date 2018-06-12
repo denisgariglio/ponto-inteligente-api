@@ -1,5 +1,4 @@
 package com.denisg.pontointeligente.api.entities;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -28,11 +27,8 @@ import com.denisg.pontointeligente.api.enums.PerfilEnum;
 @Table(name = "funcionario")
 public class Funcionario implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2399372155165686423L;
-
+	private static final long serialVersionUID = -5754246207015712518L;
+	
 	private Long id;
 	private String nome;
 	private String email;
@@ -48,11 +44,10 @@ public class Funcionario implements Serializable {
 	private List<Lancamento> lancamentos;
 
 	public Funcionario() {
-
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -79,15 +74,6 @@ public class Funcionario implements Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "senha", nullable = false)
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
 	@Column(name = "cpf", nullable = false)
 	public String getCpf() {
 		return cpf;
@@ -101,7 +87,7 @@ public class Funcionario implements Serializable {
 	public BigDecimal getValorHora() {
 		return valorHora;
 	}
-
+	
 	@Transient
 	public Optional<BigDecimal> getValorHoraOpt() {
 		return Optional.ofNullable(valorHora);
@@ -115,29 +101,28 @@ public class Funcionario implements Serializable {
 	public Float getQtdHorasTrabalhoDia() {
 		return qtdHorasTrabalhoDia;
 	}
+	
+	@Transient
+	public Optional<Float> getQtdHorasTrabalhoDiaOpt() {
+		return Optional.ofNullable(qtdHorasTrabalhoDia);
+	}
 
 	public void setQtdHorasTrabalhoDia(Float qtdHorasTrabalhoDia) {
 		this.qtdHorasTrabalhoDia = qtdHorasTrabalhoDia;
-	}
-
-	@Transient // - jpa ignora o metodo, o mesmo não está relacionado com o mapeamento do BD
-	public Optional<Float> setQtdHorasTrabalhoDiaOpt() {
-		return Optional.ofNullable(qtdHorasTrabalhoDia);
 	}
 
 	@Column(name = "qtd_horas_almoco", nullable = true)
 	public Float getQtdHorasAlmoco() {
 		return qtdHorasAlmoco;
 	}
-
-	@Column(name = "qtd_horas_almoco", nullable = true)
-	public void setQtdHorasAlmoco(Float qtdHorasAlmoco) {
-		this.qtdHorasAlmoco = qtdHorasAlmoco;
-	}
-
-	@Transient // - jpa ignora o metodo, o mesmo não está relacionado com o mapeamento do BD
+	
+	@Transient
 	public Optional<Float> getQtdHorasAlmocoOpt() {
 		return Optional.ofNullable(qtdHorasAlmoco);
+	}
+
+	public void setQtdHorasAlmoco(Float qtdHorasAlmoco) {
+		this.qtdHorasAlmoco = qtdHorasAlmoco;
 	}
 
 	@Enumerated(EnumType.STRING)
@@ -168,7 +153,15 @@ public class Funcionario implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	// Sempre ao carregar func traz dados da empresa
+	@Column(name = "senha", nullable = false)
+	public String getSenha() {
+		return senha;
+	}
+	
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	public Empresa getEmpresa() {
 		return empresa;
@@ -186,26 +179,25 @@ public class Funcionario implements Serializable {
 	public void setLancamentos(List<Lancamento> lancamentos) {
 		this.lancamentos = lancamentos;
 	}
-
+	
 	@PreUpdate
-	public void preUpdate() {
-		dataAtualizacao = new Date();
-	}
-
-	@PrePersist
-	public void prePersist() {
-		Date atual = new Date();
-		dataAtualizacao = atual;
-		dataCriacao = atual;
-
-	}
+    public void preUpdate() {
+        dataAtualizacao = new Date();
+    }
+     
+    @PrePersist
+    public void prePersist() {
+        final Date atual = new Date();
+        dataCriacao = atual;
+        dataAtualizacao = atual;
+    }
 
 	@Override
 	public String toString() {
-		return "Funcionario[id=" + id + ",	nome=" + nome + ", email=" + email + ",	senha=" + senha + ", cpf=" + cpf
+		return "Funcionario [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", cpf=" + cpf
 				+ ", valorHora=" + valorHora + ", qtdHorasTrabalhoDia=" + qtdHorasTrabalhoDia + ", qtdHorasAlmoco="
-				+ qtdHorasAlmoco + ", perfil=" + perfil + ", dataCriacao=" + dataCriacao + ", dataAtualizacao="
-				+ dataAtualizacao + ", empresa= " + empresa + "]";
+				+ qtdHorasAlmoco + ", perfil=" + perfil + ", dataCriacao="
+				+ dataCriacao + ", dataAtualizacao=" + dataAtualizacao + ", empresa=" + empresa + "]";
 	}
 
 }
